@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\JurusanModel;
 use App\FakultasModel;
+use Illuminate\Support\Facades\DB;
+
 
 class Jurusan extends Controller
 {
@@ -12,12 +14,36 @@ class Jurusan extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $jurusan = JurusanModel::when($request->search, function($query) use($request){
-            $query->where('nama_jur', 'LIKE', '%'.$request->search.'%');
-        })->paginate(5);
-        return view('jurusan/index', compact('jurusan'));
+
+    public function search(Request $request){
+    	$fakultas = FakultasModel::all();
+        $search = $request->search;
+        $searchFakultas = DB::table('fakultas')
+        					->select('id_fak')
+                            ->where('nama_fak', 'LIKE', '%'.$search.'%')
+                            ->first();
+
+        if(is_object($searchFakultas)){
+            $src = get_object_vars($searchFakultas);
+            $jurusan = DB::table('Jurusan')->where('id_fak', '=', $src)->paginate(10);
+
+            return view('jurusan.index', compact('jurusan','fakultas'));
+        }
+
+        else{
+            $jurusan = DB::table('jurusan')
+                            ->where('id_fak', '=', null)
+                            ->paginate(5);
+            return view('jurusan.index', compact('jurusan','fakultas'));
+        }
+    }
+
+
+    public function index(Request $request){
+        $jurusan = JurusanModel::paginate(10);
+        $fakultas = FakultasModel::all();
+
+        return view('jurusan/index', compact('jurusan','fakultas'));
     }
 
     /**

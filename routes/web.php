@@ -27,6 +27,7 @@ Route::get('/', function () {
     Route::get('/jurusan', 'Jurusan@index');
     Route::get('/createJur', 'Jurusan@create');
     Route::post('/storeJur', 'Jurusan@store');
+    Route::get('/search', 'Jurusan@search');
     Route::get('/deleteJur/{id_jur}', 'Jurusan@destroy');
     Route::get('/updateJur/{id_jur}', 'Jurusan@update');
     Route::post('/update/{id_jur}', 'Jurusan@updateStore');
