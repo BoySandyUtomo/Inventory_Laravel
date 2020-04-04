@@ -32,7 +32,7 @@
           <tbody>
           @foreach($jurusan as $jur)
               <tr>
-                  <td>{{ $jur->id_jur }}</td>
+                 <th scope="row">{{ $loop->iteration }}</th>
                   <td>{{ $jur->fakultas->nama_fak }}</td>
                   <td>{{ $jur->nama_jur }}</td>
                   <td>

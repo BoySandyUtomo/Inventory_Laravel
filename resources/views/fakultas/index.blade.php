@@ -31,7 +31,7 @@
           <tbody>
           @foreach( $fakultas as $fak)
             <tr>
-              <td>{{$fak->id_fak}}</td>
+            <th scope="row">{{ $loop->iteration }}</th>
               <td>{{$fak->nama_fak}}</td>
               <td>
              <a href="{{ url('/updateFak', $fak->id_fak) }}" class="badge badge-success">Edit</a>
