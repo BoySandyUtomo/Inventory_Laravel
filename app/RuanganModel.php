@@ -3,15 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Fakultas;
+use App\Jurusan;
 
 class RuanganModel extends Model
 {
-    public $table = 'Ruangan';
-    protected $primaryKey = 'id_rua';
-    protected $fillable = ['nama_rua', 'id_fak'];
+    public $table = 'ruangan';
+    protected $primaryKey = 'id_ru';
+    protected $fillable = ['nama_ru', 'id_jur'];
 
-    public function fakultas(){
-    	return $this->belongsTo('App\Fakultas', 'id_fak','id_fak');
+    public function jurusan(){
+    	return $this->belongsTo('App\JurusanModel', 'id_jur','id_jur');
     }
 }

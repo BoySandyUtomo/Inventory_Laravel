@@ -21,7 +21,7 @@ class CreateJurusanTable extends Migration
 
 
             $table->foreign('id_fak')->references('id_fak')->on('fakultas')
-                    ->onDelete('restrict')
+                    ->onDelete('cascade')
                     ->onUpdate('cascade');
         });
     }

@@ -14,13 +14,13 @@ class CreateRuanganTable extends Migration
     public function up()
     {
         Schema::create('ruangan', function (Blueprint $table) {
-            $table->increments('id_jur', 255);
-            $table->integer('id_fak')->unsigned();
-            $table->string('nama_jur', 255);
+            $table->increments('id_ru', 255);
+            $table->integer('id_jur')->unsigned();
+            $table->string('nama_ru', 255);
             $table->timestamps();
 
-            $table->foreign('id_fak')->references('id_fak')->on('fakultas')
-                    ->onDelete('restrict')
+            $table->foreign('id_jur')->references('id_jur')->on('jurusan')
+                    ->onDelete('cascade')
                     ->onUpdate('cascade');
         });
     }

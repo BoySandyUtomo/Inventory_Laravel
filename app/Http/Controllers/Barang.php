@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\BarangModel;
+use App\RuanganModel;
 use Illuminate\Http\Request;
 
 class Barang extends Controller
@@ -13,7 +14,10 @@ class Barang extends Controller
      */
     public function index()
     {
-        return view('barang/index');
+        $ruangan = RuanganModel::all();
+        $barang = BarangModel::paginate(10);
+
+        return view('barang/index', compact('barang','ruangan'));
     }
 
     /**
@@ -23,7 +27,8 @@ class Barang extends Controller
      */
     public function create()
     {
-        //
+        $ruangan = RuanganModel::all();
+        return view('barang/create', compact('ruangan'));
     }
 
     /**
@@ -34,7 +39,22 @@ class Barang extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'nama_bar' => 'required',
+            'id_ru' => 'required',
+            'total_bar' => 'required',
+            'rusak_bar' => 'required',
+        ]);
+
+        BarangModel::create([
+            'nama_bar' => $request->nama_bar,
+            'id_ru' => $request->id_ru,
+            'total_bar' => $request->total_bar,
+            'rusak_bar' => $request->rusak_bar,
+            'created_by' => $request->created_by,
+        ]);
+
+        return redirect('/barang');
     }
 
     /**
@@ -56,7 +76,7 @@ class Barang extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -66,9 +86,35 @@ class Barang extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_bar)
     {
-        //
+        $barang = BarangModel::all()->where('id_bar', '=', $id_bar)
+        ->first();
+        
+        $ruangan = RuanganModel::all();
+        return view('barang/update', compact('barang', 'ruangan'));
+    }
+
+
+    public function updateStore(Request $request, $id_bar){
+
+        $this->validate($request, [
+            'nama_bar' => 'required',
+            'id_ru' => 'required',
+            'total_bar' => 'required',
+            'rusak_bar' => 'required',
+        ]);
+
+        $table = BarangModel::find($id_bar);
+
+        $update = BarangModel::where('id_bar', $id_bar)->first();
+        $update->nama_bar = $request['nama_bar'];
+        $update->id_ru = $request['id_ru'];
+        $update->total_bar = $request['total_bar'];
+        $update->rusak_bar = $request['rusak_bar'];
+        $update->update();
+
+        return redirect('/barang');
     }
 
     /**
@@ -77,8 +123,11 @@ class Barang extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_bar)
     {
-        //
+        $delete = BarangModel::find($id_bar);
+        $delete->delete();
+
+        return redirect('/barang');
     }
 }

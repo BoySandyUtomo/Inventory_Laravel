@@ -12,9 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('index');
-});
+
+
+    Route::get('/login', 'AuthController@index');
+	Route::post('/postLogin','AuthController@postLogin');
+	Route::post('/register','AuthController@register');
+    Route::get('/logout','AuthController@logout');
+    
+
+Route::group(['middleware' => ['auth','checkRole:admin']], function(){
     //Fakultas
     Route::get('/fakultas', 'Fakultas@index');
     Route::get('/createFak', 'Fakultas@create');
@@ -32,5 +38,29 @@ Route::get('/', function () {
     Route::get('/updateJur/{id_jur}', 'Jurusan@update');
     Route::post('/update/{id_jur}', 'Jurusan@updateStore');
 
+    //Ruangan
+    Route::get('/ruangan', 'Ruangan@index');
+    Route::get('/createRu', 'Ruangan@create');
+    Route::post('/storeRua', 'Ruangan@store');
+    // Route::get('/searchRu', 'Ruangan@search');
+    Route::get('/deleteRu/{id_ru}', 'Ruangan@destroy');
+    Route::get('/updateRu/{id_ru}', 'Ruangan@update');
+    Route::post('/updateRua/{id_ru}', 'Ruangan@updateStore');
+});
+
+Route::group(['middleware' => ['auth','checkRole:admin,staff']], function(){
     //Barang
     Route::get('/barang', 'Barang@index');
+    Route::get('/createBar', 'Barang@create');
+    Route::post('/storeBar', 'Barang@store');
+    // Route::get('/search', 'Barang@search');
+    Route::get('/deleteBar/{id_bar}', 'Barang@destroy');
+    Route::get('/updateBar/{id_bar}', 'Barang@update');
+    Route::post('/updateBar/{id_bar}', 'Barang@updateStore');
+});
+Auth::routes();
+
+Route::get('/', function () {
+    return view('/auth/login');
+});
+Route::get('/home', 'HomeController@index')->name('home');
