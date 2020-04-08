@@ -15,12 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::get('/login', 'AuthController@index');
-	Route::post('/postLogin','AuthController@postLogin');
-	Route::post('/register','AuthController@register');
+    Route::post('/postLogin','AuthController@postLogin');
+    Route::post('/register','AuthController@register');
+    Route::post('/postRegister','AuthController@postRegister');
     Route::get('/logout','AuthController@logout');
     
 
 Route::group(['middleware' => ['auth','checkRole:admin']], function(){
+
+    Route::get('/dashboard', 'Dashboard@index');
     //Fakultas
     Route::get('/fakultas', 'Fakultas@index');
     Route::get('/createFak', 'Fakultas@create');
@@ -46,10 +49,12 @@ Route::group(['middleware' => ['auth','checkRole:admin']], function(){
     Route::get('/deleteRu/{id_ru}', 'Ruangan@destroy');
     Route::get('/updateRu/{id_ru}', 'Ruangan@update');
     Route::post('/updateRua/{id_ru}', 'Ruangan@updateStore');
+
 });
 
 Route::group(['middleware' => ['auth','checkRole:admin,staff']], function(){
     //Barang
+    Route::get('/dashboard', 'Dashboard@index');
     Route::get('/barang', 'Barang@index');
     Route::get('/createBar', 'Barang@create');
     Route::post('/storeBar', 'Barang@store');

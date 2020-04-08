@@ -10,15 +10,31 @@ class AuthController extends Controller
 {
     public function index(){
     	return view('/auth/login');
+	}
+	
+	public function register(){
+    	return view('auth/register');
     }
 
+    public function postRegister(Request $request){
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role
+        ]);
+
+    	return redirect('/login');
+	}
+	
     public function postLogin(Request $request){
     	if(Auth::attempt($request->only('email','password'))){
 
 			if( auth()->user()->role == 'admin'){
-				return view('index');
+				return redirect('/dashboard');
+				
 			} elseif( auth()->user()->role == 'staff'){
-				return view('barang');
+				return redirect('/dashboard');
 			}
     	}
     	// Message salah
