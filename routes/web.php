@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth','checkRole:admin,staff']], function(){
     // Route::get('/search', 'Barang@search');
     Route::get('/deleteBar/{id_bar}', 'Barang@destroy');
     Route::get('/updateBar/{id_bar}', 'Barang@update');
+    Route::get('/exportExcel', 'Barang@exportExcel');
     Route::post('/updateBar/{id_bar}', 'Barang@updateStore');
 });
 Auth::routes();

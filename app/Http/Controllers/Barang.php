@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\BarangModel;
+use App\Exports\BarangExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\RuanganModel;
 use App\User;
 use Illuminate\Http\Request;
@@ -20,6 +22,11 @@ class Barang extends Controller
         $user = User::all();
 
         return view('barang/index', compact('barang','ruangan', 'user'));
+    }
+
+    public function exportExcel(Request $request)
+	{
+		return Excel::download(new BarangExport, 'Barang-'.date("Y-m-d").'.xlsx');
     }
 
     public function indexStaff()
