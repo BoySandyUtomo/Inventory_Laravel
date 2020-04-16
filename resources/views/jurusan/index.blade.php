@@ -66,7 +66,6 @@
           </div>
 
           <div class="d-sm-flex align-items-center mb-4">
-            <a type="submit" class="btn btn-success" href="/exportExcel">Export</a>
             <a type="submit" class="btn btn-primary ml-2" href="/createJur">Add</a>
           </div>
           

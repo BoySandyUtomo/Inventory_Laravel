@@ -62,7 +62,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Create Jurusan</h1>
+            <h1 class="h3 mb-0 text-gray-800">Create Ruangan</h1>
           </div>
 
           <!-- Content Row -->
@@ -72,7 +72,7 @@
             @csrf
 
             <div class="form-group">
-                    <label for="nama_jur">Ruangan</label>
+                    <label for="nama_jur">Jurusan</label>
                     <select class="form-control" id="id_jur" name="id_jur">
                         <option value="" hidden> -- Pilih Jurusan -- </option>
                         @foreach($jurusan as $jur)

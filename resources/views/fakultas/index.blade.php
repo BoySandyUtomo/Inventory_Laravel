@@ -67,7 +67,6 @@
           </div>
 
           <div class="d-sm-flex align-items-center mb-4">
-            <a type="submit" class="btn btn-success" href="{{ url('/exportExcel') }}">Export</a>
             <a type="submit" class="btn btn-primary ml-2" href="{{ url('/createFak') }}">Add</a>
           </div>
           

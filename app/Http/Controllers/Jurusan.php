@@ -33,7 +33,7 @@ class Jurusan extends Controller
         else{
             $jurusan = DB::table('jurusan')
                             ->where('id_fak', '=', null)
-                            ->paginate(5);
+                            ->paginate(10);
             return view('jurusan.index', compact('jurusan','fakultas'));
         }
     }

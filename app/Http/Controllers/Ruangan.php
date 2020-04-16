@@ -13,10 +13,12 @@ class Ruangan extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() 
+    public function index(Request $request) 
     {
+        $ruangan = RuanganModel::when($request->search, function($query) use($request){
+            $query->where('nama_ru', 'LIKE', '%'.$request->search.'%');
+        })->paginate(10);
         $jurusan = JurusanModel::all();
-        $ruangan = RuanganModel::paginate(10);
 
         return view('ruangan/index', compact('jurusan','ruangan'));
     }

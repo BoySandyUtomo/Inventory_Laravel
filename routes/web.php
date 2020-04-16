@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']], function(){
 
 Route::group(['middleware' => ['auth','checkRole:admin,staff']], function(){
     //Barang
+    Route::get('/', 'Dashboard@index');
     Route::get('/dashboard', 'Dashboard@index');
     Route::get('/barang', 'Barang@index');
     Route::get('/createBar', 'Barang@create');
@@ -66,7 +67,4 @@ Route::group(['middleware' => ['auth','checkRole:admin,staff']], function(){
 });
 Auth::routes();
 
-Route::get('/', function () {
-    return view('/auth/login');
-});
 Route::get('/home', 'HomeController@index')->name('home');

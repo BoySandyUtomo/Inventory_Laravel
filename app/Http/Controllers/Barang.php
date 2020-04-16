@@ -15,10 +15,12 @@ class Barang extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $barang = BarangModel::when($request->search, function($query) use($request){
+            $query->where('nama_bar', 'LIKE', '%'.$request->search.'%');
+        })->paginate(10);
         $ruangan = RuanganModel::all();
-        $barang = BarangModel::paginate(10);
         $user = User::all();
 
         return view('barang/index', compact('barang','ruangan', 'user'));

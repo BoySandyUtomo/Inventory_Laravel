@@ -15,7 +15,7 @@ class Fakultas extends Controller
     {
         $fakultas = FakultasModel::when($request->search, function($query) use($request){
             $query->where('nama_fak', 'LIKE', '%'.$request->search.'%');
-        })->paginate(5);
+        })->paginate(10);
         return view('fakultas/index', compact('fakultas'));
     }
 
