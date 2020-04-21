@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\BarangModel;
 use App\Exports\BarangExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 use App\RuanganModel;
 use App\User;
 use Illuminate\Http\Request;
@@ -63,13 +64,21 @@ class Barang extends Controller
             'id_ru' => 'required',
             'total_bar' => 'required',
             'rusak_bar' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:4096'
         ]);
+
+        $file = $request->file('image');
+		$destinationPath = 'image/'; // upload path
+        $profileImage = date('YmdHis') . "." . $file->getClientOriginalExtension();
+        $file->move($destinationPath, $profileImage);
+        $insert['image'] = "$profileImage";
 
         BarangModel::create([
             'nama_bar' => $request->nama_bar,
             'id_ru' => $request->id_ru,
             'total_bar' => $request->total_bar,
             'rusak_bar' => $request->rusak_bar,
+            'image' => $insert['image'] = "$profileImage",
             'created_by' => $request->created_by,
         ]);
 
@@ -122,19 +131,37 @@ class Barang extends Controller
             'id_ru' => 'required',
             'total_bar' => 'required',
             'rusak_bar' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:4096'
 
         ]);
 
         $table = BarangModel::find($id_bar);
+
+        if ($files = $request->file('image')){
+            $usersImage = public_path("image/{$table->image}"); // get previous image from folder
+        
+         if (File::exists($usersImage)) { // unlink or remove previous image from folder
+            unlink($usersImage);
+        }
+
+        $file = $request->file('image');
+		$destinationPath = 'image/'; // upload path
+        $profileImage = date('YmdHis') . "." . $file->getClientOriginalExtension();
+        $file->move($destinationPath, $profileImage);
+        $insert['image'] = "$profileImage";
+		// $insert['foto'] = "$imageKaryawan";
 
         $update = BarangModel::where('id_bar', $id_bar)->first();
         $update->nama_bar = $request['nama_bar'];
         $update->id_ru = $request['id_ru'];
         $update->total_bar = $request['total_bar'];
         $update->rusak_bar = $request['rusak_bar'];
+        $update->image = $insert['image'] = "$profileImage";
         $update->created_by = $request['created_by'];
         $update->updated_by = $request['updated_by'];
         $update->update();
+
+    }
 
         return redirect('/barang');
     }
@@ -147,6 +174,10 @@ class Barang extends Controller
      */
     public function destroy($id_bar)
     {
+
+        $gambar = BarangModel::where('id_bar',$id_bar)->first();
+        File::delete('image/'.$gambar->image);
+
         $delete = BarangModel::find($id_bar);
         $delete->delete();
 

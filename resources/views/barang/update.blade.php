@@ -58,6 +58,16 @@
         
         <!-- Begin Page Content -->
         <div class="container-fluid">
+        @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    Upload Validation Error
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -67,7 +77,7 @@
           <!-- Content Row -->
           <div class="row">
 
-          <form method="post" action="{{ url('/updateBar/' . $barang->id_bar) }}" autocomplete="off" enctype="multipart/form-data">
+          <form id="file-upload-form" method="post" action="{{ url('/updateBar/' . $barang->id_bar) }}" autocomplete="off" enctype="multipart/form-data">
             @csrf
             
             <div class="form-group">
@@ -93,6 +103,11 @@
                 <div class="form-group">
                     <label>Rusak</label>
                     <input type="number" class="form-control" id="rusak_bar" name="rusak_bar" value="{{ $barang->rusak_bar }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">View</label>
+                    <input input id="file-upload" type="file" name="image" accept="image/*" onchange="readURL(this);" aria-describedby="inputGroupFileAddon01">
                 </div>
 
                 <input type="hidden" name="created_by" value="{{$barang->created_by}}">

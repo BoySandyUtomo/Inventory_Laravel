@@ -83,6 +83,7 @@
               <th scope="col">Ruangan</th>
               <th scope="col">Total</th>
               <th scope="col">Rusak</th>
+              <th scope="col">Image</th>
               <th scope="col">Dibuat</th>
               <th scope="col">Diupdate</th>
               <th scope="col">Action</th>
@@ -101,6 +102,7 @@
                   @endforeach</td>
                   <td>{{ $bar->total_bar }}</td>
                   <td>{{ $bar->rusak_bar }}</td>
+                  <td><img src="{{ url('image/'.$bar->image) }}" width="150px"></td>
                   <td>
                   @foreach($user as $u)
                     @if($u->id == $bar->created_by)

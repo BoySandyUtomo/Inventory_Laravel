@@ -68,6 +68,17 @@
           <!-- Content Row -->
           <div class="row">
 
+          @if(count($errors) > 0)
+                <div class="alert alert-danger">
+                    Upload Validation Error
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
             <form accept-charset="utf-8" enctype="multipart/form-data" method="post" action="{{ url('/updateStore/' . $fakultas->id_fak) }}">
             @csrf
 
