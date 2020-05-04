@@ -32,6 +32,24 @@
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
+          <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="{{ url('/sendEmail') }}" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <!-- Counter - Messages -->
+              </a>
+
+               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="{{ url('/sendEmail') }}">
+                  <div class="font-weight-bold">
+                    <div class="text-truncate"></div>
+                    <div class="small text-gray-500">Click to Send Message</div>
+                  </div>
+                </a>
+            </li>
+
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

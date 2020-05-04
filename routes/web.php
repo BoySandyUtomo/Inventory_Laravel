@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth','checkRole:admin']], function(){
 
     Route::get('/dashboard', 'Dashboard@index');
+    Route::get('/sendEmail', 'EmailController@send');
     //Fakultas
     Route::get('/fakultas', 'Fakultas@index');
     Route::get('/createFak', 'Fakultas@create');
