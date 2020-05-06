@@ -85,7 +85,40 @@
           </div>
 
           <div class="d-sm-flex align-items-center mb-4">
-            <a type="submit" class="btn btn-primary ml-2" href="{{ url('/createFak') }}">Add</a>
+            <a type="submit" class="btn btn-primary ml-2 mr-2" href="{{ url('/createFak') }}">Add</a>
+
+          <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+              Import Excel
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Import Excel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                   
+                   <form  autocomplete="off" enctype="multipart/form-data" method="post" action="{{ url('importFak') }}">
+                    @csrf
+                        <div class="form-group">
+                            <input type="file" name="excel" id="excel" accept=".xlsx" onchange="readURL(this);" required >
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                          
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           
           <!-- Content Row -->

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\FakultasModel;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
+use App\Imports\FakultasImport;
 
 class Fakultas extends Controller
 {
@@ -17,6 +20,18 @@ class Fakultas extends Controller
             $query->where('nama_fak', 'LIKE', '%'.$request->search.'%');
         })->paginate(10);
         return view('fakultas/index', compact('fakultas'));
+    }
+
+
+    public function import(Request $request)
+    {
+        $file = $request->file('excel');
+        $filename = rand().$file->getClientOriginalName();
+        $file->move('excel/fakultas', $filename);
+
+        Excel::import(new FakultasImport, public_path('/excel/fakultas/'.$filename));
+
+        return redirect('/fakultas');
     }
 
     /**

@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth','checkRole:admin']], function(){
     Route::get('/sendEmail', 'EmailController@send');
     //Fakultas
     Route::get('/fakultas', 'Fakultas@index');
+    Route::post('/importFak', 'Fakultas@import');
     Route::get('/createFak', 'Fakultas@create');
     Route::post('/storeFak', 'Fakultas@store');
     Route::get('/deleteFak/{id_fak}', 'Fakultas@destroy');
